@@ -1,0 +1,48 @@
+
+// ===================================
+// THEME TOGGLE FUNCTIONALITY
+// ===================================
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = themeToggle.querySelector('i');
+const html = document.documentElement;
+
+// Check for saved user preference, if any, on load of the website
+const savedTheme = localStorage.getItem('theme');
+const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+
+// Apply the theme
+function setTheme(theme) {
+    if (theme === 'light') {
+        html.setAttribute('data-theme', 'light');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon'); // Show moon to switch back to dark
+        // Optional: Update chart colors or other dynamic elements here
+    } else {
+        html.removeAttribute('data-theme'); // Default is dark
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun'); // Show sun to switch to light
+    }
+    
+    // Save preference
+    localStorage.setItem('theme', theme);
+}
+
+// Initialize theme
+if (savedTheme) {
+    setTheme(savedTheme);
+} else {
+    setTheme(systemTheme);
+}
+
+// Toggle event
+themeToggle.addEventListener('click', () => {
+    const currentTheme = html.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    
+    // Add a small rotation animation
+    themeToggle.style.transform = 'rotate(180deg)';
+    setTimeout(() => {
+        themeToggle.style.transform = '';
+    }, 300);
+});
