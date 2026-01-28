@@ -171,6 +171,12 @@ button {
     margin-bottom: var(--spacing-3xl);
 }
 
+@media (max-width: 768px) {
+    .section-header {
+        margin-bottom: var(--spacing-2xl);
+    }
+}
+
 .section-tag {
     display: inline-block;
     padding: var(--spacing-xs) var(--spacing-md);
@@ -517,6 +523,13 @@ button {
     transition: all var(--transition-base);
     position: relative;
     overflow: hidden;
+    min-height: 48px;
+    min-width: 100px;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .btn::before {
@@ -574,6 +587,10 @@ button {
     font-size: 1.25rem;
     transition: all var(--transition-base);
     backdrop-filter: blur(10px);
+    min-height: 48px;
+    min-width: 48px;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .social-link:hover {
@@ -582,6 +599,13 @@ button {
     transform: translateY(-5px);
     box-shadow: var(--shadow-glow);
     border-color: transparent;
+}
+
+@media (max-width: 480px) {
+    .social-link {
+        width: 44px;
+        height: 44px;
+    }
 }
 
 .hero-image {
@@ -1537,31 +1561,34 @@ button {
     .timeline-item {
         padding-left: var(--spacing-lg);
     }
+    
+    /* Education grid mobile */
+    .education-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .education-card {
+        padding: var(--spacing-md);
+    }
+    
+    /* Form improvements */
+    .contact-form {
+        padding: var(--spacing-lg);
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        font-size: 1rem;
+        padding: 0.75rem;
+    }
+    
+    /* Container responsive padding */
+    .container {
+        padding: 0 var(--spacing-md);
+    }
 }
 
-@media (max-width: 480px) {
-    :root {
-        --spacing-3xl: 3rem;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .hero-social {
-        width: 100%;
-    }
-
-    .stat-number {
-        font-size: 2rem;
-    }
-}
+@media (max-width: 480px) {\n    :root {\n        --spacing-3xl: 2.5rem;\n        --spacing-2xl: 2rem;\n        --spacing-lg: 1rem;\n    }\n\n    /* Typography adjustments */\n    body {\n        font-size: 0.95rem;\n        line-height: 1.5;\n    }\n    \n    h1, h2, h3 {\n        word-break: break-word;\n    }\n    \n    .hero-title {\n        font-size: clamp(1.5rem, 5vw, 2rem);\n    }\n    \n    .hero-subtitle {\n        font-size: clamp(1rem, 4vw, 1.5rem);\n    }\n\n    /* Hero buttons stack */\n    .hero-buttons {\n        flex-direction: column;\n        width: 100%;\n        gap: var(--spacing-md);\n    }\n\n    .btn {\n        width: 100%;\n        justify-content: center;\n        padding: 0.875rem 1rem;\n        font-size: 0.95rem;\n    }\n\n    .hero-social {\n        width: 100%;\n        justify-content: center;\n        gap: var(--spacing-sm);\n    }\n\n    .stat-number {\n        font-size: 1.75rem;\n    }\n    \n    /* Card content adjustments */\n    .card-content h3 {\n        font-size: 1.1rem;\n    }\n    \n    .project-content h3 {\n        font-size: 1.1rem;\n    }\n    \n    /* Better spacing on forms */\n    .form-group {\n        margin-bottom: var(--spacing-md);\n    }\n    \n    .form-group label {\n        margin-bottom: var(--spacing-xs);\n        font-size: 0.95rem;\n    }\n    \n    /* Footer responsive */\n    .footer-content {\n        grid-template-columns: 1fr;\n        text-align: center;\n    }\n    \n    .footer-bottom {\n        flex-direction: column;\n        text-align: center;\n    }\n}
 
 /* ===================================
    EDUCATION GRID LAYOUT
