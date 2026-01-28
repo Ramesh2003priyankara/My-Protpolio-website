@@ -1714,6 +1714,11 @@ button {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: var(--spacing-xl);
         margin-bottom: var(--spacing-xl);
+        text-align: center;
+    }
+
+    .footer-column {
+        text-align: center;
     }
 
     .footer-column h4 {
@@ -1744,6 +1749,9 @@ button {
     .footer-contact-list {
         list-style: none;
         padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .footer-links-list li,
@@ -1752,6 +1760,7 @@ button {
         display: flex;
         align-items: center;
         gap: 0.75rem;
+        justify-content: center;
     }
 
     .footer-links-list li::before,
@@ -1793,16 +1802,23 @@ button {
     /* Contact Item Styling */
     .footer-contact-list {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: var(--spacing-xl);
         list-style: none;
         padding: 0;
+        align-items: flex-start;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     .contact-item {
         display: flex;
+        flex-direction: column;
         align-items: center;
         gap: var(--spacing-lg);
+        text-align: center;
+        flex: 0 1 auto;
+        min-width: 200px;
     }
 
     .contact-icon-box {
@@ -1821,6 +1837,7 @@ button {
 
     .contact-text {
         flex: 1;
+        width: 100%;
     }
 
     .contact-text a,
@@ -1830,6 +1847,7 @@ button {
         line-height: 1.6;
         word-break: break-word;
         overflow-wrap: break-word;
+        display: block;
     }
 
     .contact-text a {
@@ -1868,17 +1886,20 @@ button {
         padding-top: var(--spacing-md);
         border-top: 1px solid var(--border-color);
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
+        flex-direction: column;
         flex-wrap: wrap;
         gap: var(--spacing-md);
         font-size: 0.85rem;
         color: var(--text-muted);
+        text-align: center;
     }
 
     .footer-legal {
         display: flex;
         gap: var(--spacing-lg);
+        justify-content: center;
     }
 
     .footer-legal a:hover {

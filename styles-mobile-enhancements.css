@@ -448,6 +448,18 @@ select:focus-visible {
         flex-shrink: 0;
     }
 
+    /* Mobile contact list - stack vertically */
+    .footer-contact-list {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .contact-item {
+        flex-direction: column;
+        min-width: auto;
+        width: 100%;
+    }
+
     .footer-contact {
         font-size: 0.85rem;
         line-height: 1.6;
@@ -560,9 +572,12 @@ select:focus-visible {
 
     .contact-item {
         display: flex;
-        align-items: flex-start;
+        flex-direction: column;
+        align-items: center;
         gap: var(--spacing-md);
         margin-bottom: var(--spacing-lg);
+        text-align: center;
+        width: 100%;
     }
 
     .contact-icon-box {
@@ -576,12 +591,17 @@ select:focus-visible {
     .contact-text {
         flex: 1;
         display: flex;
+        flex-direction: column;
         align-items: center;
+        width: 100%;
     }
 
     .contact-text a,
     .contact-text span {
         font-size: 0.9rem;
         line-height: 1.6;
+        display: block;
+        max-width: 200px;
+        word-break: break-word;
     }
 }
