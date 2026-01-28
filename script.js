@@ -126,8 +126,15 @@ animateOnScroll.forEach(el => {
 // ===================================
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', (e) => {
+if (contactForm) contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
+
+    // EmailJS often fails when the page is opened via file://
+    // Run with Live Server / localhost for reliable sending.
+    if (window.location.protocol === 'file:') {
+        showNotification('Please run this site with Live Server (localhost) to enable email sending.', 'error');
+        return;
+    }
 
     const btn = contactForm.querySelector('button[type="submit"]');
     const originalBtnText = btn.innerHTML;
@@ -137,17 +144,26 @@ contactForm.addEventListener('submit', (e) => {
     btn.disabled = true;
 
     // Send email using EmailJS
-    // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs from EmailJS dashboard
-    emailjs.sendForm('service_s8jdqse', 'template_ee0cnuf', contactForm)
+    // Read IDs from the form so you can configure them in index.html.
+    const serviceId = contactForm.dataset.emailjsService || 'service_743samz';
+    const templateId = contactForm.dataset.emailjsTemplate || 'template_wp0ke0g';
+    const publicKey = contactForm.dataset.emailjsPublicKey || 'ebVCE2VdY0Uys1qs9';
+
+    // Send message to YOUR Gmail (notification email)
+    emailjs.sendForm(serviceId, templateId, contactForm, publicKey)
         .then(() => {
-            // Show success message
-            showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
-            // Reset form
+            showNotification('Message sent successfully!', 'success');
             contactForm.reset();
         }, (error) => {
             // Show error message
-            console.error('FAILED...', error);
-            showNotification('Failed to send message. Please try again.', 'error');
+            const status = error?.status ?? 'unknown';
+            const text = error?.text ?? '';
+            console.error(`EmailJS FAILED: status=${status} text=${text}`, error);
+
+            const details = text
+                ? ` (status ${status}: ${text})`
+                : ` (status ${status}). Check EmailJS Service ID, Template ID, Public Key, and allowed origins.`;
+            showNotification(`Failed to send message. Please try again.${details}`, 'error');
         })
         .finally(() => {
             // Restore button state
@@ -306,12 +322,27 @@ window.addEventListener('load', () => {
     // generatePlaceholderImage('profileImage', 500, 500, 'SE Priyankara', 'primary');
 
     // Project images
-    generatePlaceholderImage('project1Image', 800, 500, 'E-Commerce', 'primary');
-    generatePlaceholderImage('project2Image', 800, 500, 'Task Manager', 'secondary');
-    generatePlaceholderImage('project3Image', 800, 500, 'AI Analytics', 'accent');
-    generatePlaceholderImage('project4Image', 800, 500, 'Social Dashboard', 'primary');
-    generatePlaceholderImage('project5Image', 800, 500, 'Healthcare', 'secondary');
-    generatePlaceholderImage('project6Image', 800, 500, 'Real Estate', 'accent');
+    // Only generate a placeholder if the image is missing OR is explicitly a placeholder file.
+    // This prevents overwriting real project screenshots (e.g. img/project2.jpg).
+    function ensurePlaceholderIfNeeded(elementId, width, height, text, gradient) {
+        const img = document.getElementById(elementId);
+        if (!img) return;
+
+        const src = (img.getAttribute('src') || '').trim();
+        const isMarkedPlaceholder = img.dataset.placeholder === 'true';
+        const isPlaceholderSrc = !src || /placeholder/i.test(src);
+        const failedToLoad = img.complete && img.naturalWidth === 0;
+        if (isMarkedPlaceholder || isPlaceholderSrc || failedToLoad) {
+            generatePlaceholderImage(elementId, width, height, text, gradient);
+        }
+    }
+
+    ensurePlaceholderIfNeeded('project1Image', 800, 500, 'E-Commerce', 'primary');
+    ensurePlaceholderIfNeeded('project2Image', 800, 500, 'Salon Booking', 'secondary');
+    ensurePlaceholderIfNeeded('project3Image', 800, 500, 'AI Analytics', 'accent');
+    ensurePlaceholderIfNeeded('project4Image', 800, 500, 'Social Dashboard', 'primary');
+    ensurePlaceholderIfNeeded('project5Image', 800, 500, 'Healthcare', 'secondary');
+    ensurePlaceholderIfNeeded('project6Image', 800, 500, 'Real Estate', 'accent');
 });
 
 // ===================================
